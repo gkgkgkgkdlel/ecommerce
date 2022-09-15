@@ -1,8 +1,8 @@
 from django.db import models
 
 # Create your models here.
-from ..user.models import User
-from ..product.models import Product
+from user.models import User
+from product.models import Product
 
 
 class Order(models.Model):
