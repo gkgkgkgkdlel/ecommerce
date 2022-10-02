@@ -10,6 +10,30 @@ from .serializers import UserSerializer
 import json
 import bcrypt
 import re
+from .models import User
+
+
+@permission_classes((AllowAny,))
+class SignupView(APIView):
+    def post(self, request):
+        email = request.data["email"]
+        password = request.data["password"]
+        name = request.data["name"]
+
+        print("email은 ", email)
+        print("password는 ", password)
+        print("name는 ", name)
+
+        user = User.objects.create_user(
+            email=email, password=password, name=name
+        )
+
+        print("user는 ", user)
+        user.save()
+
+        token = Token.objects.create(user=user)
+
+        return Response({"Token": token.key})
 
 
 @permission_classes((AllowAny,))
@@ -18,9 +42,6 @@ class LoginView(APIView):
         print("들어옴 ")
         email = request.data.get("email")
         password = request.data.get("password")
-
-        print(email)
-        print(password)
 
         if email is None or password is None:
             return Response(

@@ -29,7 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+# default 유저 말고 직접 만든 유저를 사용할 경우 이렇게 해야함
+AUTH_USER_MODEL = "user.User"
 # Application definition
 
 INSTALLED_APPS = [
@@ -133,8 +134,3 @@ REST_FRAMEWORK = {
         # "rest_framework.authentication.BasicAuthentication",
     ),
 }
-
-
-# default 유저 말고 직접 만든 유저를 사용할 경우 이렇게 해야함
-AUTH_USER_MODEL = "user.User"
-
