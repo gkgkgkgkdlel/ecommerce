@@ -23,7 +23,9 @@ class CreateProductView(APIView):
                 {"message": "SUCCESS"}, status=status.HTTP_201_CREATED
             )
 
-        return Response({"테스트 중입니다."})
+        return Response(
+            {"message": "FAILED"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 @permission_classes((AllowAny,))
@@ -37,7 +39,9 @@ class CreateCategoryView(APIView):
                 {"message": "SUCCESS"}, status=status.HTTP_201_CREATED
             )
 
-        return Response({"테스트 중입니다."})
+        return Response(
+            {"message": "FAILED"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 @permission_classes((AllowAny,))
@@ -52,4 +56,6 @@ class CreateTagView(APIView):
                 {"message": "SUCCESS"}, status=status.HTTP_201_CREATED
             )
 
-        return Response({"테스트 중입니다."})
+        return Response(
+            {"message": "FAILED"}, status=status.HTTP_400_BAD_REQUEST
+        )
