@@ -14,6 +14,12 @@ class Product(models.Model):
     tag_id = models.ForeignKey("product.Tag", on_delete=models.CASCADE)
 
 
+class ProductImag(models.Model):
+    id = models.AutoField(primary_key=True)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    url = models.ImageField(upload_to="appname", null=True)
+
+
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)

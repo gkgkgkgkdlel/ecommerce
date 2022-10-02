@@ -24,3 +24,9 @@ class Payment(models.Model):
     amout = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
+
+
+class OrderDetails(models.Model):
+    id = models.AutoField(primary_key=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product_quantity = models.IntegerField(default=0)
