@@ -8,7 +8,14 @@ from rest_framework.decorators import permission_classes
 import json
 import bcrypt
 import re
+from rest_framework.pagination import PageNumberPagination
+from .pagination import PaginationHandlerMixin
 from .serializers import CategorySerializer, ProductSerializer, TagSerializer
+from .models import Product
+
+
+class ProductPagination(PageNumberPagination):
+    page_size = 10
 
 
 @permission_classes((AllowAny,))
@@ -26,6 +33,29 @@ class CreateProductView(APIView):
         return Response(
             {"message": "FAILED"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+@permission_classes((AllowAny,))
+class ReadProductView(APIView, PaginationHandlerMixin):
+    pagination_class = ProductPagination
+    serializer_class = ProductSerializer
+
+    def get(self, request):
+        """
+        한 페이지당 10개의 제품 리스트를 반환함.
+        """
+
+        product_list = Product.objects.order_by("name")
+        page = self.paginate_queryset(product_list)
+
+        if page is not None:
+            serializer = self.get_paginated_response(
+                self.serializer_class(page, many=True).data
+            )
+        else:
+            serializer = self.serializer_class(product_list, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @permission_classes((AllowAny,))
