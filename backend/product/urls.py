@@ -9,4 +9,5 @@ urlpatterns = [
     path("create/tag/", views.CreateTagView.as_view()),
     path("read/", views.ReadProductView.as_view()),
     path("update/", views.UpdateProductView.as_view()),
+    path("delete/<int:product_id>", views.DeleteProductView.as_view()),
 ]

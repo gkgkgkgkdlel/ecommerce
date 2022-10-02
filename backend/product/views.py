@@ -85,6 +85,16 @@ class UpdateProductView(APIView):
 
 
 @permission_classes((AllowAny,))
+class DeleteProductView(APIView):
+    def delete(self, request, product_id):
+
+        product_obj = Product.objects.get(id=product_id)
+        product_obj.delete()
+
+        return Response({"message": "SUCCESS"}, status=status.HTTP_200_OK)
+
+
+@permission_classes((AllowAny,))
 class CreateCategoryView(APIView):
     def post(self, request):
         serializer = CategorySerializer(data=request.data)
