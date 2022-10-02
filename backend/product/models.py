@@ -9,9 +9,11 @@ class Product(models.Model):
     description = models.TextField()
     like_count = models.IntegerField(default=0)
     category_id = models.ForeignKey(
-        "product.Category", on_delete=models.CASCADE
+        "product.Category", on_delete=models.CASCADE, null=True
     )
-    tag_id = models.ForeignKey("product.Tag", on_delete=models.CASCADE)
+    tag_id = models.ForeignKey(
+        "product.Tag", on_delete=models.CASCADE, null=True
+    )
 
 
 class ProductImag(models.Model):
