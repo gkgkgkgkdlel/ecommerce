@@ -21,6 +21,9 @@ class ProductPagination(PageNumberPagination):
 @permission_classes((AllowAny,))
 class CreateProductView(APIView):
     def post(self, request):
+        """
+        제품을 생성하는 api.
+        """
 
         serializer = ProductSerializer(data=request.data)
 
@@ -63,6 +66,9 @@ class UpdateProductView(APIView):
     serializer_class = ProductSerializer
 
     def put(self, request):
+        """
+        제품 정보를 수정하는 api.
+        """
 
         data = json.loads(request.body)
         product_id = data["product_id"]
@@ -87,6 +93,9 @@ class UpdateProductView(APIView):
 @permission_classes((AllowAny,))
 class DeleteProductView(APIView):
     def delete(self, request, product_id):
+        """
+        제품을 삭제하는 api.
+        """
 
         product_obj = Product.objects.get(id=product_id)
         product_obj.delete()
@@ -97,6 +106,9 @@ class DeleteProductView(APIView):
 @permission_classes((AllowAny,))
 class CreateCategoryView(APIView):
     def post(self, request):
+        """
+        제품 카테고리를 생성하는 api.
+        """
         serializer = CategorySerializer(data=request.data)
 
         if serializer.is_valid():
@@ -113,7 +125,9 @@ class CreateCategoryView(APIView):
 @permission_classes((AllowAny,))
 class CreateTagView(APIView):
     def post(self, request):
-
+        """
+        제품 태그를 생성하는 api.
+        """
         serializer = TagSerializer(data=request.data)
 
         if serializer.is_valid():

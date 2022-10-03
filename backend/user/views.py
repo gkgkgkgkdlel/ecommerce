@@ -16,19 +16,17 @@ from .models import User
 @permission_classes((AllowAny,))
 class SignupView(APIView):
     def post(self, request):
+        """
+        회원가입 api.
+        """
         email = request.data["email"]
         password = request.data["password"]
         name = request.data["name"]
-
-        print("email은 ", email)
-        print("password는 ", password)
-        print("name는 ", name)
 
         user = User.objects.create_user(
             email=email, password=password, name=name
         )
 
-        print("user는 ", user)
         user.save()
 
         token = Token.objects.create(user=user)
@@ -39,7 +37,9 @@ class SignupView(APIView):
 @permission_classes((AllowAny,))
 class LoginView(APIView):
     def post(self, request):
-        print("들어옴 ")
+        """
+        로그인 api.
+        """
         email = request.data.get("email")
         password = request.data.get("password")
 
@@ -62,4 +62,3 @@ class LoginView(APIView):
         token, _ = Token.objects.get_or_create(user=user)
 
         return Response({"token": token.key}, status=status.HTTP_200_OK)
-
