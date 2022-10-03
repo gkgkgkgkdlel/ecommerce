@@ -4,9 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    # path("create/", views.CreateOrderView.as_view()),
-    # path("read/<int:order_id>/", views.ReadOrderView.as_view()),
-    # path("read/detail/<int:order_id>/", views.ReadOrderDetailView.as_view()),
-    # path("update/", views.UpdateOrderView.as_view()),
-    # path("delete/<int:order_id>/", views.DeleteOrderView.as_view()),
+    path("create/", views.CreatePaymentView.as_view()),
+    path("read/<int:payment_id>/", views.ReadPaymentView.as_view()),
+    path("delete/<int:payment_id>/", views.DeletePaymentView.as_view()),
 ]
