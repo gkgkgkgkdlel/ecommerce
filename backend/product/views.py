@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.decorators import permission_classes
 import json
 import bcrypt
@@ -18,7 +18,7 @@ class ProductPagination(PageNumberPagination):
     page_size = 10
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAdminUser,))
 class CreateProductView(APIView):
     def post(self, request):
         """
@@ -61,7 +61,7 @@ class ReadProductView(APIView, PaginationHandlerMixin):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAdminUser,))
 class UpdateProductView(APIView):
     serializer_class = ProductSerializer
 
@@ -90,7 +90,7 @@ class UpdateProductView(APIView):
         )
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAdminUser,))
 class DeleteProductView(APIView):
     def delete(self, request, product_id):
         """
@@ -103,7 +103,7 @@ class DeleteProductView(APIView):
         return Response({"message": "SUCCESS"}, status=status.HTTP_200_OK)
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAdminUser,))
 class CreateCategoryView(APIView):
     def post(self, request):
         """
@@ -122,7 +122,7 @@ class CreateCategoryView(APIView):
         )
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAdminUser,))
 class CreateTagView(APIView):
     def post(self, request):
         """

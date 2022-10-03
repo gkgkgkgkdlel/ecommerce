@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import permission_classes
 import json
 import bcrypt
@@ -17,7 +17,7 @@ from .models import Order, OrderDetails
 from product.serializers import ProductSerializer
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class ReadOrderView(APIView):
     """
     사용자가 주문한 주문서를 반환함.
@@ -34,7 +34,7 @@ class ReadOrderView(APIView):
         return Response({"result": result}, status=status.HTTP_200_OK)
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class CreateOrderView(APIView):
     """
     주문을 생성하는 api
@@ -89,7 +89,7 @@ class CreateOrderView(APIView):
             )
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class UpdateOrderView(APIView):
     """
     주문서를 수정하는 api
@@ -118,7 +118,7 @@ class UpdateOrderView(APIView):
             )
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class DeleteOrderView(APIView):
     """
     주문을 취소하는 api
@@ -132,7 +132,7 @@ class DeleteOrderView(APIView):
         return Response({"message": "SUCCESS"}, status=status.HTTP_200_OK)
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class ReadOrderDetailView(APIView):
     def get(self, request, order_id):
         """

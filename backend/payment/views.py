@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import permission_classes
 import json
 from .models import Payment
@@ -12,7 +12,7 @@ from order.models import Order
 from .serializers import PaymentSerializer
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class ReadPaymentView(APIView):
     """
     payment_id에 해당하는 결제 내역을 반환함.
@@ -29,7 +29,7 @@ class ReadPaymentView(APIView):
         return Response({"result": result}, status=status.HTTP_200_OK)
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class CreatePaymentView(APIView):
     """
     order_id에 해당하는 주문 내역을 결제함.
@@ -58,7 +58,7 @@ class CreatePaymentView(APIView):
             )
 
 
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 class DeletePaymentView(APIView):
     """
     결제를 취소하는 api
