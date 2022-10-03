@@ -125,7 +125,7 @@ class DeleteOrderView(APIView):
         order_obj = Order.objects.get(id=order_id)
         order_obj.delete()
 
-        return Response({"message": "SUCCESS"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "SUCCESS"}, status=status.HTTP_200_OK)
 
 
 @permission_classes((AllowAny,))

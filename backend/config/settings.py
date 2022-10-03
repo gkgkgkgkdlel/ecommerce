@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "user",
     "order",
     "product",
+    "payment",
     "rest_framework.authtoken",
 ]
 
