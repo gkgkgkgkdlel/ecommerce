@@ -86,6 +86,49 @@ class CreateOrderView(APIView):
 
 
 @permission_classes((AllowAny,))
+class UpdateOrderView(APIView):
+    """
+    주문서를 수정하는 api
+    """
+
+    def put(self, request):
+        data = json.loads(request.body)
+        user = User.objects.get(email=request.user)
+        data["user_id"] = user.id
+        order_id = data["order_id"]
+        order_obj = Order.objects.get(id=order_id)
+
+        serializer = OrderSerializer(order_obj, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(
+                {"message": "SUCCESS"}, status=status.HTTP_201_CREATED
+            )
+
+        else:
+            print(serializer.errors)
+            return Response(
+                {"message": "FAILED"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+@permission_classes((AllowAny,))
+class DeleteOrderView(APIView):
+    """
+    주문을 취소하는 api
+    """
+
+    def delete(self, request, order_id):
+
+        order_obj = Order.objects.get(id=order_id)
+        order_obj.delete()
+
+        return Response({"message": "SUCCESS"}, status=status.HTTP_201_CREATED)
+
+
+@permission_classes((AllowAny,))
 class ReadOrderDetailView(APIView):
     def get(self, request, order_id):
         """
