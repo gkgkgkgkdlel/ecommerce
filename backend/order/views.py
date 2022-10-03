@@ -21,28 +21,17 @@ from product.serializers import ProductSerializer
 class ReadOrderView(APIView):
     def get(self, request, order_id):
         """
-        사용자가 주문한 주문서와 하나의 주문에 구성된 Product 정보들을
-        물건의 수량이 높은 순으로 반환함.
+        사용자가 주문한 주문서를 반환함.
         """
 
-        # user = User.objects.get(email=request.user)
-
         order = Order.objects.get(id=order_id)
-        order_details = OrderDetails.objects.filter(
-            order_id=order_id
-        ).order_by("product_quantity")
-        product_list = []
+        order_serializer = OrderSerializer(order)
 
-        for order_detail in order_details:
-            product_id = order_detail.product_id
-            product_obj = Product.objects.get(id=product_id)
+        print("order_serializer.data는 ", order_serializer.data)
 
-            serializer = ProductSerializer(data=product_obj)
-            product_list.append(serializer.data)
+        result = {"order": order_serializer.data}
 
-        result = {"order": order, "product_list": product_list}
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"result": result}, status=status.HTTP_200_OK)
 
 
 @permission_classes((AllowAny,))
