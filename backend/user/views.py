@@ -50,9 +50,7 @@ class LoginView(APIView):
             )
 
         # 여기서 authenticate로 유저 validate
-        # user = authenticate(email=email, password=password)
         user = authenticate(request, email=email, password=password)
-        print(user)
 
         if not user:
             return Response(
@@ -65,25 +63,3 @@ class LoginView(APIView):
 
         return Response({"token": token.key}, status=status.HTTP_200_OK)
 
-
-@permission_classes((AllowAny,))
-class TestView(APIView):
-    def post(self, request):
-        # data = json.loads(request.body)
-        # password = data["password"]
-
-        # print("password는 ", password)
-        # hashed_password = bcrypt.hashpw(
-        #     password.encode("utf-8"), bcrypt.gensalt()
-        # )
-
-        # decoded_password = hashed_password.decode("utf-8")
-        # data["password"] = decoded_password
-
-        serializer = UserSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response({"Test중입니다."})

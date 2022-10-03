@@ -15,6 +15,9 @@ class Order(models.Model):
     total_price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        managed = False
+
 
 class Payment(models.Model):
     id = models.AutoField(primary_key=True)
@@ -23,6 +26,9 @@ class Payment(models.Model):
     amout = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
 
 
 class OrderDetails(models.Model):
