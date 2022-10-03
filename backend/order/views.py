@@ -83,3 +83,32 @@ class CreateOrderView(APIView):
             return Response(
                 {"message": "FAILED"}, status=status.HTTP_400_BAD_REQUEST
             )
+
+
+@permission_classes((AllowAny,))
+class ReadOrderDetailView(APIView):
+    def get(self, request, order_id):
+        """
+        사용자가 주문한 주문서에 포함된 Product 리스트를
+        물건의 수량이 높은 순으로 반환함.
+        """
+
+        # user = User.objects.get(email=request.user)
+
+        order_details = OrderDetails.objects.filter(
+            order_id=order_id
+        ).order_by("product_quantity")
+
+        product_list = []
+
+        for order_detail in order_details:
+            product_id = order_detail.product_id.id
+            product_obj = Product.objects.get(id=product_id)
+
+            serializer = ProductSerializer(product_obj)
+
+            product_list.append(serializer.data)
+
+        result = {"product_list": product_list}
+
+        return Response({"result": result}, status=status.HTTP_200_OK)
